@@ -36,6 +36,12 @@ class BookingController extends Controller
             'service_id' => 'required|exists:services,id', // Memastikan service_id valid
             'date_booking' => 'required|date',
             'total_price' => 'required|numeric',
+            'alamat' => 'required|string|max:255', // Validasi untuk alamat
+            'acara' => 'required|string|max:255', // Validasi untuk acara
+            'hijabdo_hairdo' => 'required|string', // Validasi untuk hijabdo/hairdo
+            'waktu' => 'required|date_format:H:i', // Validasi untuk waktu
+            'jumlah_orang' => 'required|integer|min:1', // Validasi untuk jumlah orang
+            "no_telp" => 'required|string|max:15', // Validasi untuk no_telp
             'additional_services' => 'array', // Menambahkan validasi untuk layanan tambahan
             'additional_services.*' => 'exists:additional_services,id', // Memastikan setiap layanan tambahan valid
         ]);
@@ -47,6 +53,12 @@ class BookingController extends Controller
             'date_booking' => $validated['date_booking'],
             'status' => "pending",
             'total_price' => $validated['total_price'],
+            'alamat' => $validated['alamat'], // Menyimpan alamat
+            'acara' => $validated['acara'], // Menyimpan acara
+            'hijabdo_hairdo' => $validated['hijabdo_hairdo'], // Menyimpan hijabdo/hairdo
+            'waktu' => $validated['waktu'], // Menyimpan waktu
+            'no_telp' => $validated['no_telp'], // Menyimpan no_telp
+            'jumlah_orang' => $validated['jumlah_orang'], // Menyimpan jumlah orang
         ]);
 
         // Menyimpan data layanan tambahan yang dipilih
@@ -193,6 +205,27 @@ class BookingController extends Controller
 
         $booking->update([
             'status' => 'completed'
+        ]);
+
+        return response()->json([
+            'message' => 'Booking confirmed successfully',
+            'booking' => $booking
+        ]);
+    }
+
+    public function rejectBooking($id)
+    {
+        $booking = Booking::find($id); // Mencari pemesanan berdasarkan ID
+
+        // Mengecek apakah pemesanan ditemukan
+        if (!$booking) {
+            return response()->json([
+                'message' => 'Booking not found'
+            ], 404);
+        }
+
+        $booking->update([
+            'status' => 'cancelled'
         ]);
 
         return response()->json([

@@ -15,6 +15,12 @@ class Booking extends Model
         'date_booking',
         'status',
         'total_price',
+        'alamat',
+        'waktu',
+        'acara',
+        'hijabdo_hairdo',
+        'jumlah_orang',
+        'no_telp'
     ];
 
     public function user()

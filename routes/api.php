@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings/all', [BookingController::class, 'getAllBooking']);
     Route::put('/bookings/:id', [BookingController::class, 'update']);
     Route::post('/bookings/{id}/confirm', [BookingController::class, 'confirmBooking']);
+    Route::post('/bookings/{id}/reject', [BookingController::class, 'rejectBooking']);
     Route::delete('/bookings/:id', [BookingController::class, 'destroy']);
 
     Route::get('/bookings/:id', [BookingController::class, 'show']);

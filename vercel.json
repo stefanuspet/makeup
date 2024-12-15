@@ -17,7 +17,7 @@
         }
     ],
     "public": true,
-    "buildCommand": "vite build && php artisan storage:link && php artisan migrate:refresh --force && php artisan migrate --force && php artisan db:seed --force",
+    "buildCommand": "vite build",
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
